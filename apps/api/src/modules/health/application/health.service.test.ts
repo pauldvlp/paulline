@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { HealthService } from './health.service';
-import { HEALTH_STATUS_OK } from './health-status';
+import { HEALTH_STATUS_OK } from '../domain/health-status';
 
 describe('HealthService', () => {
   it('reports an ok status', () => {

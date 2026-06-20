@@ -1,7 +1,7 @@
 # Requirements — INFRA-001: Arquitectura Hexagonal en módulo Health
 
 **Feature ID:** INFRA-001  
-**Status:** pending  
+**Status:** spec_ready  
 **Severity:** Importante  
 **Blocker for:** Alineación arquitectónica consistente  
 
