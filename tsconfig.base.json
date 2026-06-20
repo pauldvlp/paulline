@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022"],
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@paulline/schemas": ["packages/schemas/src/index.ts"],
+      "@paulline/schemas/*": ["packages/schemas/src/*"],
+      "@paulline/types": ["packages/types/src/index.ts"],
+      "@paulline/types/*": ["packages/types/src/*"],
+      "@paulline/sdk": ["packages/sdk/src/index.ts"],
+      "@paulline/sdk/*": ["packages/sdk/src/*"],
+      "@paulline/database": ["packages/database/src/index.ts"],
+      "@paulline/database/*": ["packages/database/src/*"]
+    }
+  }
+}

@@ -1,0 +1,127 @@
+{
+  // PROJECT IDENTITY
+  "projectName": "Paulline",
+  "projectDescription": "Centralized panel to orchestrate Cloudflare tunnels from multiple remote machines (SSH)",
+  "oneLineGoal": "Create a containerized centralized panel for orchestrating Cloudflare tunnels from multiple remote machines (SSH)",
+
+  // STACK & TECHNOLOGY
+  "stack": {
+    "language": "TypeScript",
+    "runtime": "Node.js LTS",
+    "packageManager": "pnpm",
+    "monorepo": {
+      "enabled": true,
+      "tool": "pnpm workspaces"
+    },
+    "backend": {
+      "framework": "NestJS",
+      "architecture": "Hexagonal",
+      "port": 3000
+    },
+    "frontend": {
+      "framework": "React",
+      "componentLibrary": "shadcn/ui",
+      "styles": "Tailwind CSS",
+      "design": "Atomic Design",
+      "port": 5173
+    },
+    "database": {
+      "orm": "Prisma",
+      "db": "SQLite"
+    },
+    "validation": "Zod",
+    "sdk": {
+      "name": "PaulineClient",
+      "style": "Supabase-like (fluent, chainable)"
+    },
+    "testing": {
+      "runner": "Vitest",
+      "library": "Testing Library",
+      "e2e": "Playwright"
+    }
+  },
+
+  // REPOSITORY STRUCTURE
+  "repositoryLayout": {
+    "description": "Monorepo with apps/ (deployables) and packages/ (shared libraries)",
+    "apps": {
+      "web": "Frontend React app (Atomic Design, shadcn, Tailwind)",
+      "api": "Backend NestJS API (Hexagonal Architecture)"
+    },
+    "packages": {
+      "database": "Prisma schema, migrations, client export",
+      "schemas": "Zod validation schemas (source of truth)",
+      "types": "TypeScript types (inferred from schemas, shared)",
+      "sdk": "PaulineClient SDK (Supabase-like)"
+    },
+    "root": {
+      "harness": "Harness documentation, config, backlog",
+      "docker-compose": "Docker setup (local dev + prod)",
+      "pnpm-workspace": "Workspace configuration"
+    }
+  },
+
+  // GIT & VERSION CONTROL
+  "git": {
+    "initialize": true,
+    "identity": {
+      "name": "pauldvlp",
+      "email": "johanpaulbarahona@gmail.com"
+    },
+    "remote": "https://github.com/pauldvlp/paulline",
+    "branch": "main",
+    "aiFilesInGit": true,
+    "commitPolicy": "Conventional Commits, rebase never merge-graph, single commit per feature at commit gate"
+  },
+
+  // BACKLOG & PROJECT MANAGEMENT
+  "backlog": {
+    "adapter": "GitHub Issues",
+    "location": "github.com/pauldvlp/paulline/issues"
+  },
+
+  // AGENT MODELS (role defaults)
+  "models": {
+    "leader": "claude-opus-4-8",
+    "feat_author": "claude-opus-4-8",
+    "spec_author": "claude-opus-4-8",
+    "implementer": "claude-opus-4-8",
+    "reviewer": "claude-opus-4-8"
+  },
+
+  // APPROVALS & GOVERNANCE
+  "approvals": {
+    "charter": true,
+    "spec": true,
+    "commit": true,
+    "install": true
+  },
+
+  // BUDGET & COSTS
+  "budget": {
+    "enabled": false,
+    "cap": null,
+    "trackOnly": true
+  },
+
+  // TOOLS & INTEGRATIONS
+  "tools": {
+    "codegraph": true,
+    "context7": true
+  },
+
+  // PROJECT CONSTRAINTS & CONTEXT
+  "constraints": {
+    "timeline": "No strict deadlines; self-paced",
+    "team": "Single developer (Paul)",
+    "codebase": "Open source",
+    "domainLanguage": "English (code, UI, DB, errors)",
+    "compliance": "Local storage only (SQLite); privacy first"
+  },
+
+  // COMMUNICATION
+  "communication": {
+    "language": "Spanish (with user)",
+    "codeLanguage": "English"
+  }
+}

@@ -1,0 +1,56 @@
+# Local development stack for Paulline.
+#
+# Usage:
+#   1. cp .env.example .env
+#   2. pnpm install
+#   3. pnpm run db:push          # creates ./data/paulline.db
+#   4. docker compose up -d      # boots api (3000) + web (5173)
+#
+# Source folders are bind-mounted for hot reload; node_modules stays inside the
+# images via anonymous volumes so host/container platforms never clash.
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile.dev
+    ports:
+      - '${API_PORT:-3000}:3000'
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      DATABASE_URL: file:./data/paulline.db
+      API_PORT: 3000
+    volumes:
+      - ./apps/api/src:/app/apps/api/src
+      - ./packages/database/src:/app/packages/database/src
+      - ./packages/schemas/src:/app/packages/schemas/src
+      - ./packages/types/src:/app/packages/types/src
+      - ./packages/sdk/src:/app/packages/sdk/src
+      - ./data:/app/data
+      - /app/node_modules
+    networks:
+      - paulline
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile.dev
+    ports:
+      - '${WEB_PORT:-5173}:5173'
+    environment:
+      # Inside the docker network the api is reachable by its service name.
+      VITE_API_URL: http://api:3000
+    volumes:
+      - ./apps/web/src:/app/apps/web/src
+      - ./packages/schemas/src:/app/packages/schemas/src
+      - ./packages/types/src:/app/packages/types/src
+      - ./packages/sdk/src:/app/packages/sdk/src
+      - /app/node_modules
+    networks:
+      - paulline
+    depends_on:
+      - api
+
+networks:
+  paulline:
+    driver: bridge

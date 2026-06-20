@@ -1,0 +1,22 @@
+# Development image for the React + Vite web app. Source is bind-mounted at
+# runtime so Vite HMR reflects changes; node_modules stays image-internal.
+FROM node:22-slim
+
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
+WORKDIR /app
+
+COPY pnpm-workspace.yaml pnpm-lock.yaml package.json tsconfig.base.json ./
+COPY packages ./packages
+COPY apps/web ./apps/web
+RUN pnpm install --frozen-lockfile --config.strict-dep-builds=false \
+  && pnpm rebuild esbuild
+
+# Vite consumes workspace packages via their "development" export (source),
+# so no package build step is required here.
+
+EXPOSE 5173
+
+CMD ["pnpm", "--filter", "@paulline/web", "dev", "--host"]

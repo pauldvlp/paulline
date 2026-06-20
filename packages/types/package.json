@@ -1,0 +1,27 @@
+{
+  "name": "@paulline/types",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run --passWithNoTests",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@paulline/schemas": "workspace:*",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
+  }
+}
