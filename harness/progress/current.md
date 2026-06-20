@@ -128,12 +128,9 @@ data/ en vez de db/, API_PORT/WEB_PORT, Dockerfile.dev por app.
 - Blocker: **Opción B audit** — 4 remediación features (`INFRA-001/002/003/004`) en backlog, pending spec approval
 - **Status:** No se commitea SETUP-001 hasta que remediaciones completadas (audit hallazgos = violations to fix)
 
-**INFRA-002 → `done`** ✅
-- ✅ Spec redactada + aprobada
-- ✅ Implementer: TDD red→green (16/16 tests, 0 TS errors)
-- ✅ Reviewer: APPROVED (8/8 gates)
-- ✅ Commit: 00d2651 (72.1K tokens)
-- Próximas: INFRA-001 → INFRA-004 → INFRA-003
+**INFRA-002 → `done`** ✅ (Commit 00d2651, 72.1K tokens)
+**INFRA-001 → `done`** ✅ (Commit f0c05f3, 54.6K tokens)
+- Próximas: INFRA-003, INFRA-004 (pending)
 
 ## Tools & MCPs Status
 
