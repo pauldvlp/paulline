@@ -15,7 +15,7 @@ Expose services from multiple machines (home server, cloud instance, local dev) 
 - **SDK:** PaulineClient (Supabase-like, fluent API) — the only frontend ↔ backend channel
 - **Database:** Prisma + SQLite
 - **Validation:** Zod (single source of truth, shared back/front)
-- **Testing:** Vitest + Testing Library
+- **Testing:** Vitest + Testing Library (unit / component), Playwright (E2E)
 - **Monorepo:** pnpm workspaces
 - **Containers:** Docker Compose (development)
 
@@ -90,6 +90,29 @@ pnpm run typecheck    # tsc --noEmit across the workspace
 pnpm run db:generate  # regenerate the Prisma client
 pnpm run db:push      # sync the SQLite schema
 ```
+
+## End-to-End Tests (Playwright)
+
+E2E suites live in `apps/web/e2e/` and exercise the running stack the way a real
+client would (API endpoints today, full UI flows once auth lands).
+
+```bash
+# Install browser binaries once
+pnpm --filter @paulline/web exec playwright install --with-deps
+
+# Boot the stack, then run the suites
+docker compose up -d
+pnpm test:e2e                 # all browsers (chromium, firefox, webkit)
+
+# Debug in the inspector / open the last report
+pnpm --filter @paulline/web test:e2e --debug
+pnpm --filter @paulline/web exec playwright show-report
+```
+
+Config: `apps/web/playwright.config.ts` (headless, 30s timeout, `baseURL`
+`http://localhost:5173`, screenshots + video + trace on failure, retries under
+`CI=true`). See `apps/web/e2e/README.md` for the full guide on running,
+debugging, and writing new tests.
 
 ## Hot Reload
 
