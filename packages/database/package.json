@@ -15,7 +15,9 @@
     "build": "tsc -p tsconfig.build.json",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
-    "db:reset": "prisma db push --force-reset",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:reset": "prisma migrate reset --force",
     "test": "vitest run --passWithNoTests",
     "lint": "tsc --noEmit"
   },

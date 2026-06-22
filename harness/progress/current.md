@@ -1,8 +1,8 @@
 # Progress — Current Session
 
-**Session ID:** init-003  
-**Date:** 2026-06-19  
-**Status:** ✅ Fase 4 (Provisioning) completada
+**Session ID:** session-004 (continued from init-003)  
+**Date:** 2026-06-19 → 2026-06-20  
+**Status:** ✅ SETUP-001 + REMEDIACIONES completadas + push a GitHub
 
 ## Summary
 
@@ -128,9 +128,13 @@ data/ en vez de db/, API_PORT/WEB_PORT, Dockerfile.dev por app.
 - Blocker: **Opción B audit** — 4 remediación features (`INFRA-001/002/003/004`) en backlog, pending spec approval
 - **Status:** No se commitea SETUP-001 hasta que remediaciones completadas (audit hallazgos = violations to fix)
 
-**INFRA-002 → `done`** ✅ (Commit 00d2651, 72.1K tokens)
-**INFRA-001 → `done`** ✅ (Commit f0c05f3, 54.6K tokens)
-- Próximas: INFRA-003, INFRA-004 (pending)
+**SETUP-001 + INFRA Remediations → `done` ✅ (pushed to GitHub)**
+- Commit 00d2651: SETUP-001 + INFRA-002 (shadcn/ui + RHF)
+- Commit f0c05f3: INFRA-001 (Hexagonal health)
+- Commit 58e468a: INFRA-003 (SDK type precision)
+- Commit 4fcee36: INFRA-004 (E2E Playwright)
+- **Push:** origin/main synchronized
+- **Próxima:** AUTH-001 (Cloudflare API authentication)
 
 ## Tools & MCPs Status
 
@@ -149,14 +153,53 @@ data/ en vez de db/, API_PORT/WEB_PORT, Dockerfile.dev por app.
 **Primera feature:** Setup inicial (crear estructura monorepo scaffolding, tsconfig, docker setup)
 → Feature `#SETUP-001` (SDD workflow: feat_author → spec_author → implementer → reviewer → ship)
 
+## Current Feature — AUTH-001 (in_review)
+
+**Estado:** `spec_ready` → `in_progress` → **in_review** (implementer TDD completo 2026-06-22)
+
+✅ Spec completada y aprobada:
+- ✅ design.md (Encryption: AES-256-GCM, Sesión: JWT, Storage: localStorage)
+- ✅ tasks.md (13 tasks ordenadas por dependencia)
+- ✅ Approval: `harness/approvals/resolved/spec-AUTH-001.md` (APPROVED)
+
+✅ Implementación TDD completa (13/13 tasks, red→green→refactor):
+- Log detallado: `harness/progress/impl_AUTH-001.md`
+- Tests: 81 unit verdes (schemas 14, sdk 10, api 41, web 16) + 15 E2E (3 navegadores)
+- Typecheck + build: 6 workspaces limpios (incl. `vite build` producción)
+- Migración Prisma `auth_credential_init` aplica limpia sobre DB vacía
+- Smoke live: login inválido → 401 `INVALID_API_TOKEN`; vacío → 400 `VALIDATION_ERROR`
+- Auditoría de secretos: token nunca en logs/console/tests
+- Bug cazado por E2E y corregido: `fetch` "Illegal invocation" (binding de Window) en SDK/adapter
+
+**Backend (Hexagonal `auth`):** domain (entidad, VO `CloudflareToken`, 4 puertos, 2 errores),
+application (`AuthService`, DTOs, mapper), infrastructure (4 adaptadores: cipher AES-256-GCM,
+verifier Cloudflare, JWT issuer `jose`, Prisma repo; controller `POST /auth/{login,logout}`;
+`SessionGuard`; `auth.module.ts`), filtro global de excepciones + pipe Zod en `common/`.
+
+**SDK:** `AuthClient` + `PaulineClient.auth()` + `PaulineError` tipado.
+
+**Frontend (Atomic):** `LoginForm` (apiToken), `AuthLayout`, `LoginPage`, `DashboardPage`,
+`AuthProvider`/`useAuth` (localStorage FR-7), `RequireAuth`, routing con `react-router-dom`.
+
+✅ **Review completada — APPROVED (8/8 gates)**
+- Log detallado: `harness/progress/review_AUTH-001.md`
+- Spec compliance: 100% (7 FR + 7 NFR + 11 AC)
+- Hexagonal: confirmado (domain sin imports externos)
+- Seguridad: token NUNCA leakeado
+- Integraciones: SETUP-001 + INFRA-* funcionales
+- Recomendaciones futuras (no bloqueantes): httpOnly cookie, CSRF token, test de `getActiveToken()` E2E
+
+**Sin commits** (puerta de commit pendiente tras OK humano).
+
+**Próximo paso:** Humano aprueba commit (`/paulness approvals aprobar commit-AUTH-001`) → un commit (conventional) + push.
+
 ## Notas
 
 - Stack confirmado: NestJS + React + Prisma + SQLite
 - Arquitectura: Hexagonal (backend) + Atomic Design (frontend)
 - SDK: PaulineClient (Supabase-like)
-- Backlog adapter: GitHub Issues (necesita repo inicializado)
-- Git: pendiente inicializar (`git init` + configurar identidad)
+- Git remote: origin/main (4 commits: SETUP-001 + INFRA remediations)
 
 ## Blocker
 
-Ninguno actualmente. Arnés listo para pasar a Provisioning o directamente a features.
+Ninguno. Approval de commit abierta.

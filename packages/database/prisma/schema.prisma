@@ -10,10 +10,11 @@ datasource db {
 // Scaffold models — full structure is defined in each feature spec
 // (AUTH-001, MACHINES-001, TUNNELS-001, MONITORING-001).
 
-model User {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model AuthCredential {
+  id             String   @id @default(cuid())
+  encryptedToken String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model Machine {

@@ -16,8 +16,16 @@ const apiPort = Number(process.env.API_PORT ?? DEFAULT_API_PORT);
 export const baseURL = `http://localhost:${webPort}`;
 export const apiBaseURL = `http://localhost:${apiPort}`;
 
+const WEB_SERVER_TIMEOUT_MS = 120_000;
+
 export default defineConfig({
   testDir: E2E_DIR,
+  webServer: {
+    command: 'pnpm dev',
+    url: baseURL,
+    reuseExistingServer: !isCi,
+    timeout: WEB_SERVER_TIMEOUT_MS,
+  },
   fullyParallel: true,
   forbidOnly: isCi,
   retries: isCi ? CI_RETRIES : LOCAL_RETRIES,

@@ -14,6 +14,9 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
+    resolve: {
+      conditions: ['development'],
+    },
     server: {
       host: DEV_HOST,
       port: webPort,

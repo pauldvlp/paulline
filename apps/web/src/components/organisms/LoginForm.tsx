@@ -7,8 +7,7 @@ import { FormField } from '../ui/FormField';
 import { FormGroup } from '../molecules/FormGroup';
 
 const DEFAULT_VALUES: LoginInput = {
-  email: '',
-  password: '',
+  apiToken: '',
 };
 
 export interface LoginFormProps {
@@ -23,13 +22,12 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
 
   return (
     <FormGroup onSubmit={handleSubmit((values) => onSubmit(values))}>
-      <FormField control={control} name="email" label="Email" type="email" autoComplete="email" />
       <FormField
         control={control}
-        name="password"
-        label="Password"
+        name="apiToken"
+        label="Cloudflare API Token"
         type="password"
-        autoComplete="current-password"
+        autoComplete="off"
       />
       <Button type="submit" disabled={formState.isSubmitting}>
         Log in

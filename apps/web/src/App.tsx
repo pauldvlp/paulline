@@ -1,10 +1,25 @@
-// LoginForm wired in AUTH-001; INFRA-002 only ships the form stack and pattern.
-// import { LoginForm } from './components/organisms/LoginForm';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { RequireAuth } from './components/templates/RequireAuth';
+import { LoginPage } from './components/pages/LoginPage';
+import { DashboardPage } from './components/pages/DashboardPage';
 
 export function App() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-950 text-slate-50">
-      <h1 className="text-4xl font-semibold tracking-tight">Hello Paulline</h1>
-    </main>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/"
+            element={
+              <RequireAuth>
+                <DashboardPage />
+              </RequireAuth>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
